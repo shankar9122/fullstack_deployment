@@ -1,12 +1,10 @@
-import { Teacher } from '../modals/Teacher.js';
+import { Teacher } from '../models/Teacher.js';
 import { AppError } from '../utils/AppError.js';
 
 const ALLOWED_FIELDS = ['name', 'email', 'phone', 'subject'];
 
 function pickAllowed(body = {}) {
-  return Object.fromEntries(
-    Object.entries(body).filter(([key]) => ALLOWED_FIELDS.includes(key)),
-  );
+  return Object.fromEntries(Object.entries(body).filter(([key]) => ALLOWED_FIELDS.includes(key)));
 }
 
 // POST /api/teachers
@@ -39,8 +37,8 @@ export async function updateTeacher(req, res) {
   }
 
   const teacher = await Teacher.findByIdAndUpdate(req.params.id, updates, {
-    new: true,            
-    runValidators: true, 
+    new: true,
+    runValidators: true,
   });
 
   if (!teacher) throw new AppError('Teacher not found', 404);

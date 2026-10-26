@@ -1,6 +1,7 @@
 import express from 'express';
-import { AppError } from './utils/AppError.js';
+import classRoutes from './routes/class.routes.js';
 import teacherRoutes from './routes/teacher.routes.js';
+import { AppError } from './utils/AppError.js';
 
 const app = express();
 
@@ -12,13 +13,11 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/teachers', teacherRoutes);
-
+app.use('/api/classes', classRoutes);
 
 app.use((req, res, next) => {
   next(new AppError('Route not found', 404));
 });
-
-
 
 // Global error handler (4 parameters zaroori hain)
 app.use((err, req, res, next) => {
@@ -30,8 +29,11 @@ app.use((err, req, res, next) => {
 
   // 2. Duplicate key (unique index)
   if (err.code === 11000) {
-    const field = Object.keys(err.keyPattern ?? {})[0] ?? 'field';
-    return res.status(409).json({ message: `${field} already exists` });
+    const fields = Object.keys(err.keyPattern ?? {});
+    const message =
+      fields.length > 1 ? 'A record with this combination already exists' : `${fields[0] ?? 'field'} already exists`;
+
+    return res.status(409).json({ message });
   }
 
   // 3. Galat ObjectId type
