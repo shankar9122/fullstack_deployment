@@ -1,5 +1,6 @@
 import express from 'express';
 import classRoutes from './routes/class.routes.js';
+import studentRoutes from './routes/student.routes.js';
 import teacherRoutes from './routes/teacher.routes.js';
 import { AppError } from './utils/AppError.js';
 
@@ -14,6 +15,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/teachers', teacherRoutes);
 app.use('/api/classes', classRoutes);
+app.use('/api/students', studentRoutes);
 
 app.use((req, res, next) => {
   next(new AppError('Route not found', 404));

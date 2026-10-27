@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "node --watch --env-file=.env src/server.js",
-    "start": "node src/server.js",
-    "seed:classes": "node --env-file=.env src/seed/seedClasses.js"
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",

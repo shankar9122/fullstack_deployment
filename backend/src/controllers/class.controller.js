@@ -74,6 +74,12 @@ export async function updateClass(req, res) {
 
 // DELETE /api/classes/:id
 export async function deleteClass(req, res) {
+  const studentCount = await Student.countDocuments({ class: req.params.id });
+
+  if (studentCount > 0) {
+    throw new AppError(`Cannot delete class: ${studentCount} student(s) are still enrolled`, 409);
+  }
+
   const classDoc = await Class.findByIdAndDelete(req.params.id);
 
   if (!classDoc) throw new AppError('Class not found', 404);
