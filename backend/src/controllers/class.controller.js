@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import { Class } from '../models/Class.js';
+import { Student } from '../models/Student.js';
 import { Teacher } from '../models/Teacher.js';
 import { AppError } from '../utils/AppError.js';
+import { buildPagination, parsePagination } from '../utils/pagination.js';
 
 const ALLOWED_FIELDS = ['name', 'section', 'academicYear', 'classTeacher'];
 const TEACHER_FIELDS = 'name email subject';
@@ -34,13 +36,44 @@ export async function createClass(req, res) {
   res.status(201).json({ class: classDoc });
 }
 
-// GET /api/classes
-export async function getClasses(req, res) {
-  const classes = await Class.find()
-    .populate('classTeacher', TEACHER_FIELDS)
-    .sort({ academicYear: -1, name: 1, section: 1 });
+const CLASS_NAMES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+const ACADEMIC_YEAR_PATTERN = /^\d{4}-\d{2}$/;
 
-  res.json({ count: classes.length, classes });
+// GET /api/classes?name=&academicYear=&page=&limit=
+export async function getClasses(req, res) {
+  const { page, limit, skip } = parsePagination(req.query);
+  const { name, academicYear } = req.query;
+
+  const filter = {};
+
+  if (name !== undefined) {
+    if (typeof name !== 'string' || !CLASS_NAMES.includes(name)) {
+      throw new AppError('name must be between 1 and 12', 400);
+    }
+    filter.name = name;
+  }
+
+  if (academicYear !== undefined) {
+    if (typeof academicYear !== 'string' || !ACADEMIC_YEAR_PATTERN.test(academicYear)) {
+      throw new AppError('academicYear must look like 2025-26', 400);
+    }
+    filter.academicYear = academicYear;
+  }
+
+  const [classes, total] = await Promise.all([
+    Class.find(filter)
+      .populate('classTeacher', TEACHER_FIELDS)
+      .sort({ academicYear: -1, name: 1, section: 1, _id: 1 })
+      .collation({ locale: 'en', numericOrdering: true })
+      .skip(skip)
+      .limit(limit),
+    Class.countDocuments(filter),
+  ]);
+
+  res.json({
+    classes,
+    pagination: buildPagination({ page, limit, total }),
+  });
 }
 
 // GET /api/classes/:id
