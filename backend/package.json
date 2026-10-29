@@ -5,7 +5,10 @@
   "main": "app.js",
   "scripts": {
     "dev": "node --watch --env-file=.env src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "seed:teachers": "node --env-file=.env src/seed/seedTeachers.js",
+    "seed:classes": "node --env-file=.env src/seed/seedClasses.js",
+    "seed:students": "node --env-file=.env src/seed/seedStudents.js"
   },
   "engines": {
     "node": ">=20"
