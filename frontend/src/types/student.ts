@@ -24,3 +24,15 @@ export interface StudentListQuery {
   page?: number;
   limit?: number;
 }
+
+// Backend ko jo payload bhejna hai
+export interface StudentInput {
+  name: string;
+  rollNumber: number;
+  email?: string;
+  dob: string; // "2012-03-15"
+  gender?: Gender;
+  guardianName: string;
+  guardianPhone: string;
+  class: string; // class ki _id
+}
