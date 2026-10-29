@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import classRoutes from './routes/class.routes.js';
 import reportRoutes from './routes/report.routes.js';
@@ -7,6 +8,9 @@ import { AppError } from './utils/AppError.js';
 
 const app = express();
 
+const allowedOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:3001').split(',').map((origin) => origin.trim());
+
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // Health check
