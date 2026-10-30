@@ -5,6 +5,9 @@ import { Alert } from '@/components/ui/Alert';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { useDebounce } from '@/hooks/useDebounce';
+import { getErrorMessage } from '@/lib/http/errors';
+import { classService } from '@/services/class.service';
+import { ClassItem } from '@/types/class';
 import { useState } from 'react';
 import { ClassesTable } from './components/ClassesTable';
 import { useClasses } from './hooks/useClasses';
@@ -18,18 +21,43 @@ export function ClassesView() {
   const [year, setYear] = useState('');
   const [page, setPage] = useState(1);
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
   const debouncedYear = useDebounce(year.trim());
 
   // Backend adhoore format (jaise "2025") par 400 deta hai,
   // isliye filter tabhi bhejo jab poora "2025-26" jaisa ban jaye
   const academicYear = YEAR_PATTERN.test(debouncedYear) ? debouncedYear : undefined;
 
-  const { classes, pagination, loading, error } = useClasses({
+  const { classes, pagination, loading, error, refresh } = useClasses({
     name: name || undefined,
     academicYear,
     page,
     limit: PAGE_SIZE,
   });
+
+  async function handleDelete(classItem: ClassItem) {
+    if (!window.confirm(`Delete ${classItem.name}? This cannot be undone.`)) return;
+
+    setDeletingId(classItem._id);
+    setDeleteError(null);
+
+    try {
+      await classService.remove(classItem._id);
+
+      // Aakhri row delete hui toh khaali page na dikhe, peeche wale page par jao
+      if (classes.length === 1 && page > 1) {
+        setPage(page - 1);
+      } else {
+        refresh();
+      }
+    } catch (err) {
+      setDeleteError(getErrorMessage(err));
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   return (
     <section>
@@ -63,10 +91,11 @@ export function ClassesView() {
       </div>
 
       {error && <Alert>{error}</Alert>}
+      {deleteError && <Alert>{deleteError}</Alert>}
       {loading && <p className="text-sm">Loading...</p>}
       {!loading && !error && classes.length === 0 && <p className="text-sm">No classes found.</p>}
 
-      {classes.length > 0 && <ClassesTable classes={classes} />}
+      {classes.length > 0 && <ClassesTable classes={classes} deletingId={deletingId} onDelete={handleDelete} />}
 
       {pagination && <PaginationControls pagination={pagination} itemLabel="classes" onPageChange={setPage} />}
     </section>

@@ -5,10 +5,10 @@ export interface ClassItem {
   name: string;
   section: string;
   academicYear: string;
-  classTeacher?: TeacherSummary;
+  classTeacher?: TeacherSummary | null;
 }
 
-// Student ke andar populate hoke yahi aata hai
+// Shape returned when a class is populated inside a student
 export type ClassSummary = Pick<ClassItem, '_id' | 'name' | 'section' | 'academicYear'>;
 
 export interface ClassListQuery {
@@ -16,4 +16,12 @@ export interface ClassListQuery {
   academicYear?: string;
   page?: number;
   limit?: number;
+}
+
+// Payload sent to the backend
+export interface ClassInput {
+  name: string;
+  section: string;
+  academicYear: string;
+  classTeacher: string | null; // null removes the class teacher on update
 }

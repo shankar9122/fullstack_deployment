@@ -2,7 +2,7 @@ import { getErrorMessage, isAbortError } from '@/lib/http/errors';
 import { classService } from '@/services/class.service';
 import type { Pagination } from '@/types/api';
 import type { ClassItem, ClassListQuery } from '@/types/class';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface State {
   classes: ClassItem[];
@@ -18,6 +18,7 @@ export function useClasses(query: ClassListQuery) {
     loading: true,
     error: null,
   });
+  const [reloadKey, setReloadKey] = useState(0);
 
   const { name, academicYear, page, limit } = query;
 
@@ -34,7 +35,9 @@ export function useClasses(query: ClassListQuery) {
       });
 
     return () => controller.abort();
-  }, [name, academicYear, page, limit]);
+  }, [name, academicYear, page, limit, reloadKey]);
 
-  return state;
+  const refresh = useCallback(() => setReloadKey((key) => key + 1), []);
+
+  return { ...state, refresh };
 }
