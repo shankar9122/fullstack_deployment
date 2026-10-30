@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1418" viewBox="0 0 1500 1418" role="img" aria-labelledby="title desc">
+<title id="title">Project folder structure</title>
+<desc id="desc">A visual tree diagram of the src folder, showing app routes, feature modules, reusable components, hooks, services, types, HTTP utilities, and environment configuration.</desc>
+<defs>
+  <linearGradient id="header" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#172554"/>
+    <stop offset="100%" stop-color="#1e3a8a"/>
+  </linearGradient>
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+    <feDropShadow dx="0" dy="5" stdDeviation="10" flood-color="#0f172a" flood-opacity=".10"/>
+  </filter>
+</defs>
+<rect width="100%" height="100%" fill="#f4f7fb"/>
+<rect x="24" y="20" width="1452" height="1378" rx="20" fill="#ffffff" stroke="#e2e8f0" filter="url(#shadow)"/>
+<path d="M44 20 H1456 Q1476 20 1476 40 V104 H24 V40 Q24 20 44 20Z" fill="url(#header)"/>
+<text x="58" y="61" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="27" font-weight="700" fill="#ffffff">Project structure</text>
+<text x="58" y="86" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13" fill="#cbd5e1">src/ · Next.js App Router · Feature-based architecture</text>
+<g transform="translate(1110 54)">
+  <rect x="0" y="-14" width="13" height="10" rx="2" fill="#fbbf24"/>
+  <path d="M1 -16h5l2 2h5v3H1z" fill="#fde68a"/>
+  <text x="21" y="-5" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#e2e8f0">Folder</text>
+  <rect x="91" y="-15" width="11" height="13" rx="2" fill="#bfdbfe"/>
+  <path d="M98 -15v4h4" fill="none" stroke="#1e40af" stroke-width="1"/>
+  <text x="110" y="-5" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#e2e8f0">File</text>
+</g>
+
+<rect x="42" y="108" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<g transform="translate(74 113)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="105" y="126" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">src/</text>
+<path d="M85 137 V151 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 142)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="155" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">app/</text>
+<text x="249" y="155" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Routing only</text>
+<rect x="42" y="166" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M119 166 V180 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(145 171)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="173" y="184" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">layout.tsx</text>
+<text x="283" y="184" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Root layout</text>
+<path d="M119 195 V209 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(145 200)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="173" y="213" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">page.tsx</text>
+<text x="283" y="213" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Redirects to /students</text>
+<rect x="42" y="224" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M119 224 V238 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 229)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="242" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">students/</text>
+<path d="M153 253 V267 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 258)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="271" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">page.tsx</text>
+<text x="317" y="271" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /students</text>
+<rect x="42" y="282" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 282 V296 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(176 287)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="207" y="300" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">new/</text>
+<path d="M187 311 V325 H201" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(213 316)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="241" y="329" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">page.tsx</text>
+<text x="351" y="329" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /students/new</text>
+<rect x="42" y="340" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 340 V354 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(176 345)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="207" y="358" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">[id]/</text>
+<path d="M187 369 V383 H201" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(210 374)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="241" y="387" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">edit/</text>
+<rect x="42" y="398" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M221 398 V412 H235" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(247 403)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="275" y="416" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">page.tsx</text>
+<text x="385" y="416" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /students/:id/edit</text>
+<path d="M119 427 V441 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 432)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="445" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">classes/</text>
+<text x="283" y="445" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Same route pattern</text>
+<rect x="42" y="456" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 456 V470 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 461)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="474" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">page.tsx</text>
+<text x="317" y="474" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /classes</text>
+<path d="M153 485 V499 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 490)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="503" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">new/page.tsx</text>
+<text x="326.6" y="503" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /classes/new</text>
+<rect x="42" y="514" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 514 V528 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 519)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="532" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">[id]/edit/page.tsx</text>
+<text x="376.4" y="532" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /classes/:id/edit</text>
+<path d="M119 543 V557 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 548)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="561" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">teachers/</text>
+<text x="283" y="561" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Same route pattern</text>
+<rect x="42" y="572" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 572 V586 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 577)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="590" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">page.tsx</text>
+<text x="317" y="590" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /teachers</text>
+<path d="M153 601 V615 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 606)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="619" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">new/page.tsx</text>
+<text x="326.6" y="619" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /teachers/new</text>
+<rect x="42" y="630" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 630 V644 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 635)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="648" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">[id]/edit/page.tsx</text>
+<text x="376.4" y="648" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— /teachers/:id/edit</text>
+<path d="M85 659 V673 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 664)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="677" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">features/</text>
+<text x="249" y="677" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Feature-specific UI</text>
+<rect x="42" y="688" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M119 688 V702 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 693)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="706" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">students/</text>
+<path d="M153 717 V731 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 722)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="735" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">StudentsView.tsx</text>
+<text x="359.8" y="735" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— List page</text>
+<rect x="42" y="746" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 746 V760 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 751)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="764" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">CreateStudentView.tsx</text>
+<text x="401.3" y="764" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Create page</text>
+<path d="M153 775 V789 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 780)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="793" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">EditStudentView.tsx</text>
+<text x="384.70000000000005" y="793" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Edit page</text>
+<rect x="42" y="804" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 804 V818 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 809)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="822" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">studentForm.ts</text>
+<text x="343.20000000000005" y="822" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Zod schema, types &amp; mappers</text>
+<path d="M153 833 V847 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(176 838)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="207" y="851" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">components/</text>
+<text x="318.3" y="851" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Feature components</text>
+<rect x="42" y="862" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 862 V876 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(176 867)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="207" y="880" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">hooks/</text>
+<text x="317" y="880" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Feature data hooks</text>
+<path d="M119 891 V905 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 896)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="909" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">classes/</text>
+<text x="283" y="909" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Same feature structure</text>
+<rect x="42" y="920" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M119 920 V934 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 925)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="938" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">teachers/</text>
+<text x="283" y="938" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Same feature structure</text>
+<path d="M85 949 V963 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 954)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="967" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">components/</text>
+<text x="250.3" y="967" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Reusable UI</text>
+<rect x="42" y="978" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M119 978 V992 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 983)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="996" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">ui/</text>
+<text x="283" y="996" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Alert, Button, Input, Select…</text>
+<path d="M119 1007 V1021 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 1012)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="1025" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">layout/</text>
+<text x="283" y="1025" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Navbar</text>
+<rect x="42" y="1036" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M119 1036 V1050 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 1041)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="1054" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">shared/</text>
+<text x="283" y="1054" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Pagination, error alert</text>
+<path d="M85 1065 V1079 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 1070)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="1083" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">hooks/</text>
+<text x="249" y="1083" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Generic hooks</text>
+<rect x="42" y="1094" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M85 1094 V1108 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 1099)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="1112" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">services/</text>
+<text x="249" y="1112" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— API services</text>
+<path d="M85 1123 V1137 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 1128)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="1141" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">types/</text>
+<text x="249" y="1141" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— TypeScript interfaces</text>
+<rect x="42" y="1152" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M85 1152 V1166 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 1157)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="1170" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">lib/</text>
+<path d="M119 1181 V1195 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(142 1186)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="173" y="1199" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="600" fill="#334155">http/</text>
+<rect x="42" y="1210" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M153 1210 V1224 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 1215)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="1228" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">client.ts</text>
+<text x="317" y="1228" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Fetch wrapper</text>
+<path d="M153 1239 V1253 H167" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(179 1244)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="207" y="1257" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">errors.ts</text>
+<text x="317" y="1257" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— ApiError</text>
+<rect x="42" y="1268" width="1416" height="29" rx="6" fill="#f8fafc"/>
+<path d="M85 1268 V1282 H99" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(108 1273)"><path d="M1 4.5h8l2 2h13v12H1z" fill="#fbbf24" stroke="#d97706" stroke-width=".8"/><path d="M1 5V3.5Q1 2 2.5 2H8l2 2h10Q22 4 22 5.5V7H1z" fill="#fde68a" stroke="#d97706" stroke-width=".7"/></g>
+<text x="139" y="1286" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="700" fill="#1e3a8a">config/</text>
+<path d="M119 1297 V1311 H133" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+<g transform="translate(145 1302)"><rect x="1" y="1" width="16" height="19" rx="2" fill="#dbeafe" stroke="#60a5fa" stroke-width=".8"/><path d="M12 1v5h5" fill="none" stroke="#60a5fa" stroke-width=".8"/><path d="M4 10h10M4 13h10M4 16h7" stroke="#3b82f6" stroke-width=".8"/></g>
+<text x="173" y="1315" font-family="SFMono-Regular,Consolas,Liberation Mono,monospace" font-size="14" font-weight="500" fill="#0f172a">env.ts</text>
+<text x="283" y="1315" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12.5" fill="#64748b">— Environment validation</text>
+
+<line x1="52" y1="1361" x2="1448" y2="1361" stroke="#e2e8f0"/>
+<text x="58" y="1384" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="11.5" fill="#94a3b8">Feature views compose hooks and components; services handle API operations; lib/http centralizes HTTP concerns.</text>
+</svg>
