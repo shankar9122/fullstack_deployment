@@ -2,7 +2,7 @@ import { getErrorMessage, isAbortError } from '@/lib/http/errors';
 import { teacherService } from '@/services/teacher.service';
 import type { Pagination } from '@/types/api';
 import type { Teacher, TeacherListQuery } from '@/types/teacher';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface State {
   teachers: Teacher[];
@@ -20,6 +20,7 @@ export function useTeachers(query: TeacherListQuery) {
   });
 
   const { search, page, limit } = query;
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -34,7 +35,9 @@ export function useTeachers(query: TeacherListQuery) {
       });
 
     return () => controller.abort();
-  }, [search, page, limit]);
+  }, [search, page, limit, reloadKey]);
 
-  return state;
+  const refresh = useCallback(() => setReloadKey((key) => key + 1), []);
+
+  return { ...state, refresh };
 }

@@ -8,6 +8,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { getErrorMessage } from '@/lib/http/errors';
 import { classService } from '@/services/class.service';
 import { ClassItem } from '@/types/class';
+import Link from 'next/link';
 import { useState } from 'react';
 import { ClassesTable } from './components/ClassesTable';
 import { useClasses } from './hooks/useClasses';
@@ -61,7 +62,12 @@ export function ClassesView() {
 
   return (
     <section>
-      <h1 className="mb-4 text-2xl font-bold">Classes</h1>
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Classes</h1>
+        <Link href="/classes/new" className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100">
+          Add Class
+        </Link>
+      </div>
 
       <div className="mb-4 flex flex-wrap gap-3">
         <Select
