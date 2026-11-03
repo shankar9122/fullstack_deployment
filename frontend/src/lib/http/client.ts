@@ -38,6 +38,7 @@ async function request<T>(
   { params, body, signal, auth = true }: RequestOptions = {},
 ): Promise<T> {
   const token = auth ? tokenStorage.get() : null;
+  console.log('🚀 ~ request ~ token:', token);
 
   const headers: Record<string, string> = {};
   if (body !== undefined) headers['Content-Type'] = 'application/json';

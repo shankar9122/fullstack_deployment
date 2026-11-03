@@ -1,22 +1,14 @@
+import { RequireAdmin } from '@/components/shared/RequireAdmin';
 import { EditStudentView } from '@/features/students/EditStudentView';
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 
 export const metadata: Metadata = { title: 'Edit student | School Admin' };
 
-interface PageProps {
-  params: Promise<{ id: string }>;
-}
-
-async function EditStudentPageContent({ params }: PageProps) {
-  const { id } = await params;
-  return <EditStudentView id={id} />;
-}
-
-export default function EditStudentPage({ params }: PageProps) {
+export default async function EditStudentPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params; // params is a Promise in recent Next.js versions
   return (
-    <Suspense fallback={<div>Loading student editor...</div>}>
-      <EditStudentPageContent params={params} />
-    </Suspense>
+    <RequireAdmin>
+      <EditStudentView id={id} />
+    </RequireAdmin>
   );
 }

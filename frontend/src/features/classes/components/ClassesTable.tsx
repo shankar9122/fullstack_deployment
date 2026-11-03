@@ -6,10 +6,12 @@ export function ClassesTable({
   classes,
   deletingId,
   onDelete,
+  canManage,
 }: {
   classes: ClassItem[];
   deletingId: string | null;
   onDelete: (student: ClassItem) => void;
+  canManage: boolean;
 }) {
   return (
     <div className="overflow-x-auto">
@@ -20,7 +22,7 @@ export function ClassesTable({
             <th className="p-2">Academic year</th>
             <th className="p-2">Class teacher</th>
             <th className="p-2">Subject</th>
-            <th className="p-2">Actions</th>
+            {canManage && <th className="p-2">Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -32,14 +34,19 @@ export function ClassesTable({
               <td className="p-2">{c.academicYear}</td>
               <td className="p-2">{c.classTeacher?.name ?? <span className="text-gray-500">Not assigned</span>}</td>
               <td className="p-2">{c.classTeacher?.subject ?? '-'}</td>
-              <td className="flex gap-2 p-2">
-                <Link href={`/classes/${c._id}/edit`} className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100">
-                  Edit
-                </Link>
-                <Button disabled={deletingId === c._id} onClick={() => onDelete(c)}>
-                  {deletingId === c._id ? 'Deleting...' : 'Delete'}
-                </Button>
-              </td>
+              {canManage && (
+                <td className="flex gap-2 p-2">
+                  <Link
+                    href={`/classes/${c._id}/edit`}
+                    className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100"
+                  >
+                    Edit
+                  </Link>
+                  <Button disabled={deletingId === c._id} onClick={() => onDelete(c)}>
+                    {deletingId === c._id ? 'Deleting...' : 'Delete'}
+                  </Button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

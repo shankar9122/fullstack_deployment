@@ -1,11 +1,13 @@
 'use client';
 
+import { AdminOnly } from '@/components/shared/AdminOnly';
 import { PaginationControls } from '@/components/shared/PaginationControls';
 import { Alert } from '@/components/ui/Alert';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { useDebounce } from '@/hooks/useDebounce';
 import { getErrorMessage } from '@/lib/http/errors';
+import { useAuth } from '@/providers/auth-context';
 import { classService } from '@/services/class.service';
 import { ClassItem } from '@/types/class';
 import Link from 'next/link';
@@ -21,6 +23,7 @@ export function ClassesView() {
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [page, setPage] = useState(1);
+  const { isAdmin } = useAuth();
 
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -64,9 +67,11 @@ export function ClassesView() {
     <section>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Classes</h1>
-        <Link href="/classes/new" className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100">
-          Add Class
-        </Link>
+        <AdminOnly>
+          <Link href="/classes/new" className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100">
+            Add Class
+          </Link>
+        </AdminOnly>
       </div>
 
       <div className="mb-4 flex flex-wrap gap-3">
@@ -101,7 +106,9 @@ export function ClassesView() {
       {loading && <p className="text-sm">Loading...</p>}
       {!loading && !error && classes.length === 0 && <p className="text-sm">No classes found.</p>}
 
-      {classes.length > 0 && <ClassesTable classes={classes} deletingId={deletingId} onDelete={handleDelete} />}
+      {classes.length > 0 && (
+        <ClassesTable classes={classes} deletingId={deletingId} onDelete={handleDelete} canManage={isAdmin} />
+      )}
 
       {pagination && <PaginationControls pagination={pagination} itemLabel="classes" onPageChange={setPage} />}
     </section>
