@@ -1,19 +1,21 @@
 'use client';
 
 import { AdminOnly } from '@/components/shared/AdminOnly';
+import { DataTable } from '@/components/shared/DataTable';
 import { PaginationControls } from '@/components/shared/PaginationControls';
+import { RowActions } from '@/components/shared/RowActions';
 import { Alert } from '@/components/ui/Alert';
+import { LinkButton } from '@/components/ui/LinkButton';
 import { useClassOptions } from '@/features/classes/hooks/useClassOptions';
 import { useDebounce } from '@/hooks/useDebounce';
 import { getErrorMessage } from '@/lib/http/errors';
 import { useAuth } from '@/providers/auth-context';
 import { studentService } from '@/services/student.service';
 import { Student } from '@/types/student';
-import Link from 'next/link';
 import { useState } from 'react';
 import { StudentFilters } from './components/StudentFilters';
-import { StudentsTable } from './components/StudentsTable';
 import { useStudents } from './hooks/useStudents';
+import { studentColumns } from './studentColumns';
 
 const PAGE_SIZE = 10;
 
@@ -62,9 +64,7 @@ export function StudentsView() {
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Students</h1>
         <AdminOnly>
-          <Link href="/students/new" className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100">
-            Add student
-          </Link>
+          <LinkButton href="/students/new">Add student</LinkButton>
         </AdminOnly>
       </div>
 
@@ -86,7 +86,24 @@ export function StudentsView() {
       {deleteError && <Alert>{deleteError}</Alert>}
 
       {students.length > 0 && (
-        <StudentsTable students={students} deletingId={deletingId} onDelete={handleDelete} canManage={isAdmin} />
+        <DataTable
+          caption="Students"
+          columns={studentColumns}
+          rows={students}
+          getRowKey={(student) => student._id}
+          renderActions={
+            isAdmin
+              ? (student) => (
+                  <RowActions
+                    label={student.name}
+                    editHref={`/students/${student._id}/edit`}
+                    deleting={deletingId === student._id}
+                    onDelete={() => handleDelete(student)}
+                  />
+                )
+              : undefined
+          }
+        />
       )}
       {pagination && <PaginationControls pagination={pagination} itemLabel="students" onPageChange={setPage} />}
     </section>

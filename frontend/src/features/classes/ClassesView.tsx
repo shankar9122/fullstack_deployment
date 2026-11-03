@@ -1,18 +1,20 @@
 'use client';
 
 import { AdminOnly } from '@/components/shared/AdminOnly';
+import { DataTable } from '@/components/shared/DataTable';
 import { PaginationControls } from '@/components/shared/PaginationControls';
+import { RowActions } from '@/components/shared/RowActions';
 import { Alert } from '@/components/ui/Alert';
 import { Input } from '@/components/ui/Input';
+import { LinkButton } from '@/components/ui/LinkButton';
 import { Select } from '@/components/ui/Select';
 import { useDebounce } from '@/hooks/useDebounce';
 import { getErrorMessage } from '@/lib/http/errors';
 import { useAuth } from '@/providers/auth-context';
 import { classService } from '@/services/class.service';
 import { ClassItem } from '@/types/class';
-import Link from 'next/link';
 import { useState } from 'react';
-import { ClassesTable } from './components/ClassesTable';
+import { classColumns } from './classColumns';
 import { useClasses } from './hooks/useClasses';
 
 const PAGE_SIZE = 10;
@@ -68,9 +70,7 @@ export function ClassesView() {
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Classes</h1>
         <AdminOnly>
-          <Link href="/classes/new" className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100">
-            Add Class
-          </Link>
+          <LinkButton href="/classes/new">Add Class</LinkButton>
         </AdminOnly>
       </div>
 
@@ -106,9 +106,24 @@ export function ClassesView() {
       {loading && <p className="text-sm">Loading...</p>}
       {!loading && !error && classes.length === 0 && <p className="text-sm">No classes found.</p>}
 
-      {classes.length > 0 && (
-        <ClassesTable classes={classes} deletingId={deletingId} onDelete={handleDelete} canManage={isAdmin} />
-      )}
+      <DataTable
+        caption="Classes"
+        columns={classColumns}
+        rows={classes}
+        getRowKey={(item) => item._id}
+        renderActions={
+          isAdmin
+            ? (item) => (
+                <RowActions
+                  label={`${item.name}-${item.section}`}
+                  editHref={`/classes/${item._id}/edit`}
+                  deleting={deletingId === item._id}
+                  onDelete={() => handleDelete(item)}
+                />
+              )
+            : undefined
+        }
+      />
 
       {pagination && <PaginationControls pagination={pagination} itemLabel="classes" onPageChange={setPage} />}
     </section>
