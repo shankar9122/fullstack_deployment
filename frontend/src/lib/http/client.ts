@@ -1,4 +1,5 @@
 import { env } from '@/config/env';
+import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { ApiError } from './errors';
 
 type QueryValue = string | number | boolean | null | undefined;
@@ -8,6 +9,16 @@ interface RequestOptions {
   params?: QueryParams;
   body?: unknown;
   signal?: AbortSignal;
+  /** Set to false for public endpoints such as login: no token is sent and a 401 is not treated as an expired session */
+  auth?: boolean;
+}
+
+// The auth layer registers a callback here. This keeps the HTTP client free of React and routing
+type UnauthorizedHandler = () => void;
+let unauthorizedHandler: UnauthorizedHandler | null = null;
+
+export function setUnauthorizedHandler(handler: UnauthorizedHandler | null): void {
+  unauthorizedHandler = handler;
 }
 
 function buildUrl(path: string, params?: QueryParams): string {
@@ -24,27 +35,38 @@ function buildUrl(path: string, params?: QueryParams): string {
 async function request<T>(
   method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
   path: string,
-  { params, body, signal }: RequestOptions = {},
+  { params, body, signal, auth = true }: RequestOptions = {},
 ): Promise<T> {
+  const token = auth ? tokenStorage.get() : null;
+
+  const headers: Record<string, string> = {};
+  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  if (token) headers.Authorization = `Bearer ${token}`;
+
   let res: Response;
 
   try {
     res = await fetch(buildUrl(path, params), {
       method,
-      headers: body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
+      headers,
       body: body !== undefined ? JSON.stringify(body) : undefined,
       signal,
     });
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error;
-    // Network down ya CORS block: fetch yahin throw karta hai
+    // Network down or blocked by CORS: fetch throws here
     throw new ApiError('Cannot reach the server. Check your connection or CORS settings.', 0);
   }
 
   const data = await res.json().catch(() => null);
 
-  // fetch 4xx/5xx par reject nahi hota, isliye yahan khud check
+  // fetch does not reject on 4xx/5xx, so check the status ourselves
   if (!res.ok) {
+    // Only react if the token we sent is still the current one. Otherwise this is a late response
+    // from before a new login (or after logout), and it must not log the user out again
+    if (res.status === 401 && token && tokenStorage.get() === token) {
+      unauthorizedHandler?.();
+    }
     throw new ApiError(data?.message ?? `Request failed (${res.status})`, res.status, data?.errors);
   }
 

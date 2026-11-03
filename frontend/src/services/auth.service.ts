@@ -4,7 +4,8 @@ import type { AuthUser, ChangePasswordInput, ChangePasswordResponse, LoginInput,
 // Services only talk to the API. Saving the token is the AuthProvider's job
 export const authService = {
   login(input: LoginInput): Promise<LoginResponse> {
-    return http.post<LoginResponse>('/auth/login', { body: input });
+    // Public endpoint: no token, and a 401 here just means wrong credentials
+    return http.post<LoginResponse>('/auth/login', { body: input, auth: false });
   },
 
   async me(signal?: AbortSignal): Promise<AuthUser> {
