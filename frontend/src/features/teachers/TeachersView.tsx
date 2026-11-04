@@ -1,16 +1,20 @@
 'use client';
 
+import { AdminOnly } from '@/components/shared/AdminOnly';
+import { DataTable } from '@/components/shared/DataTable';
 import { PaginationControls } from '@/components/shared/PaginationControls';
+import { RowActions } from '@/components/shared/RowActions';
 import { Alert } from '@/components/ui/Alert';
 import { Input } from '@/components/ui/Input';
+import { LinkButton } from '@/components/ui/LinkButton';
 import { useDebounce } from '@/hooks/useDebounce';
 import { getErrorMessage } from '@/lib/http/errors';
+import { useAuth } from '@/providers/auth-context';
 import { teacherService } from '@/services/teacher.service';
 import { Teacher } from '@/types/teacher';
-import Link from 'next/link';
 import { useState } from 'react';
-import { TeachersTable } from './components/TeachersTable';
 import { useTeachers } from './hooks/useTeachers';
+import { teacherColumns } from './teacherColumns';
 
 const PAGE_SIZE = 10;
 
@@ -21,6 +25,7 @@ export function TeachersView() {
   const debouncedSearch = useDebounce(search);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+  const { isAdmin } = useAuth();
 
   const { teachers, pagination, loading, error, refresh } = useTeachers({
     search: debouncedSearch,
@@ -54,9 +59,9 @@ export function TeachersView() {
     <section>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Teachers</h1>
-        <Link href="/teachers/new" className="rounded border px-3 py-1.5 text-sm hover:bg-gray-100">
-          Add Teacher
-        </Link>
+        <AdminOnly>
+          <LinkButton href="/teachers/new">Add Teacher</LinkButton>
+        </AdminOnly>
       </div>
 
       <div className="mb-4">
@@ -72,10 +77,28 @@ export function TeachersView() {
       </div>
 
       {error && <Alert>{error}</Alert>}
+      {deleteError && <Alert>{deleteError}</Alert>}
       {loading && <p className="text-sm">Loading...</p>}
       {!loading && !error && teachers.length === 0 && <p className="text-sm">No teachers found.</p>}
 
-      {teachers.length > 0 && <TeachersTable teachers={teachers} deletingId={deletingId} onDelete={handleDelete} />}
+      <DataTable
+        caption="Teachers"
+        columns={teacherColumns}
+        rows={teachers}
+        getRowKey={(teacher) => teacher._id}
+        renderActions={
+          isAdmin
+            ? (teacher) => (
+                <RowActions
+                  label={teacher.name}
+                  editHref={`/teachers/${teacher._id}/edit`}
+                  deleting={deletingId === teacher._id}
+                  onDelete={() => handleDelete(teacher)}
+                />
+              )
+            : undefined
+        }
+      />
 
       {pagination && <PaginationControls pagination={pagination} itemLabel="teachers" onPageChange={setPage} />}
     </section>

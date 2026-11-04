@@ -33,49 +33,40 @@ Full-stack app: Express + MongoDB (Atlas) API and Next.js frontend.
 
 ## Folder structure
 
+```
 src/
-├── app/ # Routing only
-│ ├── layout.tsx # Root layout
-│ ├── page.tsx # Redirects to /students
-│ ├── students/
-│ │ ├── page.tsx
-│ │ ├── new/
-│ │ │ └── page.tsx
-│ │ └── [id]/
-│ │ └── edit/
-│ │ └── page.tsx
-│ ├── classes/
-│ │ ├── page.tsx
-│ │ ├── new/page.tsx
-│ │ └── [id]/edit/page.tsx
-│ └── teachers/
-│ ├── page.tsx
-│ ├── new/page.tsx
-│ └── [id]/edit/page.tsx
+├── app/                          # ROUTING ONLY: thin pages, no logic
+│   ├── layout.tsx                # Root layout (Navbar + main container)
+│   ├── page.tsx                  # Redirects "/" to "/students"
+│   ├── students/
+│   │   ├── page.tsx              # /students
+│   │   ├── new/page.tsx          # /students/new
+│   │   └── [id]/edit/page.tsx    # /students/:id/edit
+│   ├── classes/                  # same three routes
+│   └── teachers/                 # same three routes
 │
-├── features/ # Feature-specific UI
-│ ├── students/
-│ │ ├── StudentsView.tsx
-│ │ ├── CreateStudentView.tsx
-│ │ ├── EditStudentView.tsx
-│ │ ├── studentForm.ts
-│ │ ├── components/
-│ │ └── hooks/
-│ ├── classes/
-│ └── teachers/
+├── features/                     # FEATURE UI: one folder per domain
+│   ├── students/
+│   │   ├── StudentsView.tsx      # List page: filters, table, pagination, delete
+│   │   ├── CreateStudentView.tsx
+│   │   ├── EditStudentView.tsx
+│   │   ├── studentForm.ts        # Zod schema, form types, form<->API mappers
+│   │   ├── components/           # StudentForm, StudentFilters, StudentsTable
+│   │   └── hooks/                # useStudents (list), useStudent (one)
+│   ├── classes/                  # same shape, plus useClassOptions (dropdown data)
+│   └── teachers/                 # same shape, plus useTeacherOptions (dropdown data)
 │
-├── components/ # Reusable UI
-│ ├── ui/
-│ ├── layout/
-│ └── shared/
+├── components/                   # REUSABLE UI: knows nothing about the domain
+│   ├── ui/                       # Alert, Button, FormField, Input, Select,
+│   │                             # SelectField, TextField
+│   ├── layout/                   # Navbar
+│   └── shared/                   # PaginationControls, ServerErrorAlert
 │
-├── hooks/ # Generic hooks
-├── services/ # API services
-├── types/ # TypeScript interfaces
+├── hooks/                        # GENERIC HOOKS: useDebounce, useFormSubmit
+├── services/                     # API CALLS: student/class/teacher .service.ts
+├── types/                        # INTERFACES: api.ts, student.ts, class.ts, teacher.ts
 ├── lib/
-│ └── http/
-│ ├── client.ts
-│ └── errors.ts
-│
+│   └── http/                     # fetch wrapper (client.ts) + ApiError (errors.ts)
 └── config/
-└── env.ts # Environment validation
+    └── env.ts                    # Reads and validates environment variables
+```
