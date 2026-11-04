@@ -13,6 +13,7 @@ export interface AuthContextValue {
   sessionExpired: boolean;
   login: (input: LoginInput) => Promise<void>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);

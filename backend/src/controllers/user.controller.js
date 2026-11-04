@@ -55,15 +55,48 @@ export async function getUsers(req, res) {
   res.json({ users, pagination: buildPagination({ page, limit, total }) });
 }
 
-// PATCH /api/users/:id (only isActive and role can change)
-export async function updateUser(req, res) {
-  const { isActive, role } = req.body ?? {};
+const UPDATABLE_FIELDS = ['name', 'email', 'role', 'isActive', 'password'];
 
-  if (isActive === undefined && role === undefined) {
-    throw new AppError('Provide isActive and/or role', 400);
+// Compare ids from the loaded document, never from the URL (hex case can differ there)
+function assertNotSelf(target, actingUser, action) {
+  if (target.id === actingUser.id) {
+    throw new AppError(`You cannot ${action} your own account`, 409);
+  }
+}
+
+// Deleting, disabling or demoting the last active admin would lock everyone out
+async function assertAnotherActiveAdminExists(action) {
+  const activeAdmins = await User.countDocuments({ role: 'admin', isActive: true });
+
+  if (activeAdmins <= 1) {
+    throw new AppError(`Cannot ${action} the last active admin`, 409);
+  }
+}
+
+// GET /api/users/:id
+export async function getUser(req, res) {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new AppError('User not found', 404);
+
+  res.json({ user });
+}
+
+// PATCH /api/users/:id
+export async function updateUser(req, res) {
+  const updates = Object.fromEntries(Object.entries(req.body ?? {}).filter(([key]) => UPDATABLE_FIELDS.includes(key)));
+
+  if (Object.keys(updates).length === 0) {
+    throw new AppError('No valid fields to update', 400);
   }
 
-  // Strict types: the guards below use === and Mongoose would silently cast "false" to false
+  const { name, email, role, isActive, password } = updates;
+
+  // Strict types: the guards below use ===, and Mongoose would silently cast "false" to false
+  for (const [field, value] of Object.entries({ name, email, password })) {
+    if (value !== undefined && typeof value !== 'string') {
+      throw new AppError(`${field} must be a string`, 400);
+    }
+  }
   if (isActive !== undefined && typeof isActive !== 'boolean') {
     throw new AppError('isActive must be true or false', 400);
   }
@@ -74,27 +107,28 @@ export async function updateUser(req, res) {
   const target = await User.findById(req.params.id);
   if (!target) throw new AppError('User not found', 404);
 
-  // True when this change would remove admin access from an active admin
+  // A password reset would invalidate the admin's own token and log them out,
+  // so own-password changes go through /auth/change-password instead
+  if (password !== undefined && target.id === req.user.id) {
+    throw new AppError('Use the change password option for your own account', 400);
+  }
+
   const removesAdminAccess =
     target.role === 'admin' && target.isActive && (isActive === false || (role !== undefined && role !== 'admin'));
 
   if (removesAdminAccess) {
-    // Compare ids from the loaded document, not from the URL (hex case can differ)
-    if (target.id === req.user.id) {
-      throw new AppError('Admins cannot disable or demote themselves', 409);
-    }
-
-    // Extra safety net. In a single request this cannot fire (the caller is an active admin),
-    // but it protects against inconsistent data
-    const activeAdmins = await User.countDocuments({ role: 'admin', isActive: true });
-    if (activeAdmins <= 1) {
-      throw new AppError('Cannot disable or demote the last active admin', 409);
-    }
+    const action = isActive === false ? 'disable' : 'demote';
+    assertNotSelf(target, req.user, action);
+    await assertAnotherActiveAdminExists(action);
   }
 
-  if (isActive !== undefined) target.isActive = isActive;
+  if (name !== undefined) target.name = name;
+  if (email !== undefined) target.email = email;
   if (role !== undefined) target.role = role;
+  if (isActive !== undefined) target.isActive = isActive;
+  if (password !== undefined) target.password = password;
 
+  // save() runs the schema validators, and the pre-save hook hashes a changed password
   await target.save();
 
   res.json({ message: 'User updated successfully', user: target });

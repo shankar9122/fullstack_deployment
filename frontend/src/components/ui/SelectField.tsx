@@ -6,17 +6,15 @@ interface SelectFieldProps extends ComponentProps<'select'> {
   id: string;
   label: string;
   error?: string;
+  hint?: string;
 }
 
-export function SelectField({ id, label, error, children, ...selectProps }: SelectFieldProps) {
+export function SelectField({ id, label, error, hint, children, ...selectProps }: SelectFieldProps) {
+  const describedBy = error ? `${id}-error` : hint ? `${id}-hint` : undefined;
+
   return (
-    <FormField label={label} htmlFor={id} error={error}>
-      <Select
-        id={id}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={error ? `${id}-error` : undefined}
-        {...selectProps}
-      >
+    <FormField label={label} htmlFor={id} error={error} hint={hint}>
+      <Select id={id} aria-invalid={error ? true : undefined} aria-describedby={describedBy} {...selectProps}>
         {children}
       </Select>
     </FormField>

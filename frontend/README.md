@@ -225,8 +225,17 @@ Checklist:
 
 ## Known limitations and roadmap
 
-- **No authentication yet.** Anyone with the URL can create, edit and delete records. Login (JWT), roles and protected routes are the next phase.
-- Data fetching uses custom hooks. A library such as TanStack Query could replace `hooks/` later without touching components or services.
-- No automated tests yet.
-- The API runs on a free Render instance, so the first request after idle is slow.
-- Planned: student photo upload, report pages (students per class, gender distribution, teacher workload, average age) that use the API's `/api/reports/*` endpoints.
+## Authentication
+
+- `providers/AuthProvider` owns the auth state (`loading`, `authenticated`, `unauthenticated`) and
+  exposes `useAuth()` with `user`, `isAdmin`, `login` and `logout`.
+- `lib/auth/tokenStorage.ts` is the only place that knows where the token is stored (localStorage).
+- `lib/http/client.ts` sends `Authorization: Bearer <token>` and calls an unauthorized handler on a
+  `401`, which logs the user out. The login request itself is exempt.
+- `app/(protected)/layout.tsx` wraps all data pages in `RequireAuth`.
+- Role-based UI: `AdminOnly` hides small pieces (buttons), `RequireAdmin` guards whole pages
+  (`/new` and `/edit`). These are for user experience only. The API enforces the real rules.
+
+Known limitations: the token is kept in localStorage, so an XSS bug could expose it (an httpOnly cookie
+behind a same-origin proxy would be safer). Logging out in one tab does not update other open tabs
+until they make a request.
