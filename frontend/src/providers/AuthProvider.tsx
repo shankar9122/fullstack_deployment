@@ -4,7 +4,7 @@ import { tokenStorage } from '@/lib/auth/tokenStorage';
 import { setUnauthorizedHandler } from '@/lib/http/client';
 import { ApiError, isAbortError } from '@/lib/http/errors';
 import { authService } from '@/services/auth.service';
-import type { AuthUser, LoginInput } from '@/types/auth';
+import type { AuthUser, ChangePasswordInput, LoginInput } from '@/types/auth';
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { AuthContext, type AuthContextValue, type AuthStatus } from './auth-context';
 
@@ -77,6 +77,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(me);
   }, []);
 
+  const changePassword = useCallback(async (input: ChangePasswordInput) => {
+    const { token, user: updatedUser } = await authService.changePassword(input);
+
+    // The old token is already invalid on the server, so store the fresh one before anything else runs.
+    // The 401 check in the HTTP client ignores responses that were sent with the old token
+    tokenStorage.set(token);
+    setUser(updatedUser);
+  }, []);
+
   const value = useMemo<AuthContextValue>(
     () => ({
       user,
@@ -86,8 +95,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       login,
       logout,
       refreshUser,
+      changePassword,
     }),
-    [user, status, sessionExpired, login, logout, refreshUser],
+    [user, status, sessionExpired, login, logout, refreshUser, changePassword],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

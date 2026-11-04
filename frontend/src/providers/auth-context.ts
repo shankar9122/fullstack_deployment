@@ -1,6 +1,6 @@
 'use client';
 
-import type { AuthUser, LoginInput } from '@/types/auth';
+import type { AuthUser, ChangePasswordInput, LoginInput } from '@/types/auth';
 import { createContext, useContext } from 'react';
 
 export type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated';
@@ -14,6 +14,7 @@ export interface AuthContextValue {
   login: (input: LoginInput) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
+  changePassword: (input: ChangePasswordInput) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);

@@ -20,3 +20,13 @@ export const loginLimiter = rateLimit({
   legacyHeaders: false,
   message: { message: 'Too many login attempts, please try again in 15 minutes' },
 });
+
+// Same idea as the login limiter: only failed attempts count
+export const passwordChangeLimiter = rateLimit({
+  windowMs: FIFTEEN_MINUTES,
+  limit: 10,
+  skipSuccessfulRequests: true,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { message: 'Too many failed attempts, please try again in 15 minutes' },
+});

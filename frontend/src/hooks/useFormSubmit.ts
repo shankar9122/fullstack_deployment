@@ -6,7 +6,15 @@ export interface ServerError {
   details?: string[];
 }
 
-export function useFormSubmit<T>(onSubmit: (values: T) => Promise<void>) {
+interface Options {
+  /**
+   * Keep the submit button disabled after a successful submit. Right for forms that redirect
+   * (it prevents double submits). Turn it off for forms that stay on the page
+   */
+  disableAfterSuccess?: boolean;
+}
+
+export function useFormSubmit<T>(onSubmit: (values: T) => Promise<void>, { disableAfterSuccess = true }: Options = {}) {
   const [serverError, setServerError] = useState<ServerError | null>(null);
   const [done, setDone] = useState(false);
 
@@ -15,8 +23,7 @@ export function useFormSubmit<T>(onSubmit: (values: T) => Promise<void>) {
 
     try {
       await onSubmit(values);
-      // Keep the submit button disabled while the redirect happens, to avoid double submits
-      setDone(true);
+      setDone(disableAfterSuccess);
     } catch (error) {
       setServerError({
         message: getErrorMessage(error),

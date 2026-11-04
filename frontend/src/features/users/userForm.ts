@@ -2,11 +2,10 @@ import type { CreateUserInput, UpdateUserInput, User } from '@/types/user';
 import { z } from 'zod';
 
 const EMAIL_PATTERN = /^\S+@\S+\.\S+$/;
-const MIN_PASSWORD_LENGTH = 8;
-const MAX_PASSWORD_BYTES = 72; // bcrypt ignores everything after 72 bytes
+
+import { MAX_PASSWORD_BYTES, MIN_PASSWORD_LENGTH, passwordByteLength } from '@/lib/validation/password';
 
 // Bytes, not characters: "é" or an emoji takes more than one byte
-const byteLength = (value: string) => new TextEncoder().encode(value).length;
 
 const name = z
   .string()
@@ -29,7 +28,7 @@ export const createUserSchema = buildSchema(
   z
     .string()
     .min(MIN_PASSWORD_LENGTH, 'Password must be at least 8 characters')
-    .refine((value) => byteLength(value) <= MAX_PASSWORD_BYTES, 'Password is too long (72 bytes maximum)'),
+    .refine((value) => passwordByteLength(value) <= MAX_PASSWORD_BYTES, 'Password is too long (72 bytes maximum)'),
 );
 
 // Edit: an empty password means "keep the current one"
@@ -38,7 +37,7 @@ export const editUserSchema = buildSchema(
     .string()
     .refine((value) => value === '' || value.length >= MIN_PASSWORD_LENGTH, 'Password must be at least 8 characters')
     .refine(
-      (value) => value === '' || byteLength(value) <= MAX_PASSWORD_BYTES,
+      (value) => value === '' || passwordByteLength(value) <= MAX_PASSWORD_BYTES,
       'Password is too long (72 bytes maximum)',
     ),
 );

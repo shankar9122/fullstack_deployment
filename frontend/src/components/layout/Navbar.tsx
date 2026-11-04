@@ -40,7 +40,10 @@ export function Navbar() {
 
             <div className="ml-auto flex items-center gap-3 text-sm">
               <span>
-                {user.name} <span className="rounded bg-gray-100 px-2 py-0.5 text-xs capitalize">{user.role}</span>
+                <Link href="/account" className="hover:underline">
+                  {user.name}
+                </Link>{' '}
+                <span className="rounded bg-gray-100 px-2 py-0.5 text-xs capitalize">{user.role}</span>
               </span>
               <Button onClick={logout}>Log out</Button>
             </div>
