@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { Class } from '../models/Class.js';
 import { Student } from '../models/Student.js';
+import { removePhoto } from '../services/photoStorage.js';
 import { AppError } from '../utils/AppError.js';
 import { buildPagination, parsePagination } from '../utils/pagination.js';
 
@@ -126,6 +127,16 @@ export async function deleteStudent(req, res) {
   const student = await Student.findByIdAndDelete(req.params.id);
 
   if (!student) throw new AppError('Student not found', 404);
+
+  // for remove image
+  if (student.photo?.publicId) {
+    // Best effort: the student is already gone, so a storage hiccup must not fail the request
+    try {
+      await removePhoto(student.photo.publicId);
+    } catch (error) {
+      console.error('Orphaned photo left in Cloudinary:', student.photo.publicId, error);
+    }
+  }
 
   res.json({ message: 'Student deleted successfully', student });
 }

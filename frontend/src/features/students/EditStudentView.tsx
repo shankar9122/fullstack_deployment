@@ -1,6 +1,7 @@
 'use client';
 
 import { Alert } from '@/components/ui/Alert';
+import { Avatar } from '@/components/ui/Avatar';
 import { useClassOptions } from '@/features/classes/hooks/useClassOptions';
 import { studentService } from '@/services/student.service';
 import { useRouter } from 'next/navigation';
@@ -25,7 +26,10 @@ export function EditStudentView({ id }: { id: string }) {
 
   return (
     <section>
-      <h1 className="mb-4 text-2xl font-bold">Edit student</h1>
+      <div className="mb-4 flex items-center gap-4">
+        <Avatar name={student.name} src={student.photoUrl} size={72} alt={`Photo of ${student.name}`} />
+        <h1 className="text-2xl font-bold">Edit student</h1>
+      </div>
       <StudentForm
         initialValues={fromStudent(student)}
         classes={classes}

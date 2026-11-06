@@ -76,6 +76,13 @@ app.use((err, req, res, next) => {
   if (err.type === 'entity.too.large') {
     return res.status(413).json({ message: 'Request body too large' });
   }
+  // for cloudaniry
+  if (err.name === 'MulterError') {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(413).json({ message: 'Image is too large (maximum 2 MB)' });
+    }
+    return res.status(400).json({ message: 'Invalid upload: send one image in the "photo" field' });
+  }
 
   const status = err.statusCode || 500;
   if (status === 500) console.error(err);

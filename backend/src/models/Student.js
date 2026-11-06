@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { getPhotoUrl } from '../services/photoStorage.js';
 
 const studentSchema = new mongoose.Schema(
   {
@@ -57,11 +58,30 @@ const studentSchema = new mongoose.Schema(
       ref: 'Class',
       required: [true, 'Class is required'],
     },
+    photo: {
+      publicId: { type: String },
+      version: { type: Number },
+    },
   },
-  { timestamps: true },
+
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        delete ret.photo; // storage details stay on the server
+        delete ret.id; // virtuals: true adds a duplicate of _id
+        return ret;
+      },
+    },
+  },
 );
 
 // each class has unique roll number
 studentSchema.index({ class: 1, rollNumber: 1 }, { unique: true });
+// Appears in every student response as "photoUrl" (a signed URL, or null when there is no photo)
+studentSchema.virtual('photoUrl').get(function () {
+  return this.photo?.publicId ? getPhotoUrl(this.photo) : null;
+});
 
 export const Student = mongoose.model('Student', studentSchema);

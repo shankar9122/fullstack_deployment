@@ -33,15 +33,17 @@ function buildUrl(path: string, params?: QueryParams): string {
 }
 
 async function request<T>(
-  method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
   path: string,
   { params, body, signal, auth = true }: RequestOptions = {},
 ): Promise<T> {
   const token = auth ? tokenStorage.get() : null;
-  console.log('🚀 ~ request ~ token:', token);
+
+  // 2. FormData is sent as is. The browser adds "multipart/form-data; boundary=..." itself
+  const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
 
   const headers: Record<string, string> = {};
-  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  if (body !== undefined && !isFormData) headers['Content-Type'] = 'application/json';
   if (token) headers.Authorization = `Bearer ${token}`;
 
   let res: Response;
@@ -50,7 +52,7 @@ async function request<T>(
     res = await fetch(buildUrl(path, params), {
       method,
       headers,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: body === undefined ? undefined : isFormData ? body : JSON.stringify(body),
       signal,
     });
   } catch (error) {
@@ -77,6 +79,7 @@ async function request<T>(
 export const http = {
   get: <T>(path: string, options?: RequestOptions) => request<T>('GET', path, options),
   post: <T>(path: string, options?: RequestOptions) => request<T>('POST', path, options),
+  put: <T>(path: string, options?: RequestOptions) => request<T>('PUT', path, options),
   patch: <T>(path: string, options?: RequestOptions) => request<T>('PATCH', path, options),
   delete: <T>(path: string, options?: RequestOptions) => request<T>('DELETE', path, options),
 };
