@@ -34,4 +34,19 @@ export const studentService = {
   async remove(id: string): Promise<void> {
     await http.delete(`/students/${id}`);
   },
+
+  // Sends the file as multipart form data. The API field name must be "photo"
+  async uploadPhoto(id: string, file: File): Promise<string> {
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    const { photoUrl } = await http.put<{ photoUrl: string }>(`/students/${id}/photo`, {
+      body: formData,
+    });
+    return photoUrl;
+  },
+
+  async removePhoto(id: string): Promise<void> {
+    await http.delete(`/students/${id}/photo`);
+  },
 };

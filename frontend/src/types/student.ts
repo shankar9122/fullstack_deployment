@@ -13,6 +13,7 @@ export interface Student {
   guardianName: string;
   guardianPhone: string;
   class: ClassSummary;
+  photoUrl: string | null;
 }
 
 export interface StudentListQuery {
