@@ -1,10 +1,10 @@
 'use client';
 
 import { Alert } from '@/components/ui/Alert';
-import { Avatar } from '@/components/ui/Avatar';
 import { useClassOptions } from '@/features/classes/hooks/useClassOptions';
 import { studentService } from '@/services/student.service';
 import { useRouter } from 'next/navigation';
+import { PhotoUploader } from './components/PhotoUploader';
 import { StudentForm } from './components/StudentForm';
 import { useStudent } from './hooks/useStudent';
 import { fromStudent, toStudentInput, type StudentFormValues } from './studentForm';
@@ -12,7 +12,8 @@ import { fromStudent, toStudentInput, type StudentFormValues } from './studentFo
 export function EditStudentView({ id }: { id: string }) {
   const router = useRouter();
   const { classes, loading: classesLoading, error: classesError } = useClassOptions();
-  const { student, loading: studentLoading, error: studentError } = useStudent(id);
+
+  const { student, loading: studentLoading, error: studentError, setPhotoUrl } = useStudent(id);
 
   async function handleSubmit(values: StudentFormValues) {
     await studentService.update(id, toStudentInput(values));
@@ -26,10 +27,17 @@ export function EditStudentView({ id }: { id: string }) {
 
   return (
     <section>
-      <div className="mb-4 flex items-center gap-4">
-        <Avatar name={student.name} src={student.photoUrl} size={72} alt={`Photo of ${student.name}`} />
-        <h1 className="text-2xl font-bold">Edit student</h1>
+      <h1 className="mb-4 text-2xl font-bold">Edit student</h1>
+
+      <div className="mb-8">
+        <PhotoUploader
+          studentId={id}
+          studentName={student.name}
+          photoUrl={student.photoUrl}
+          onPhotoChange={setPhotoUrl}
+        />
       </div>
+
       <StudentForm
         initialValues={fromStudent(student)}
         classes={classes}
