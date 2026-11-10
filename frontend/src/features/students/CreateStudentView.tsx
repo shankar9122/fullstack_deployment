@@ -11,8 +11,8 @@ export function CreateStudentView() {
   const { classes } = useClassOptions();
 
   async function handleSubmit(values: StudentFormValues) {
-    await studentService.create(toStudentInput(values));
-    router.push('/students');
+    const res = await studentService.create(toStudentInput(values));
+    router.push(`/students/${res._id}/edit`);
   }
 
   return (
