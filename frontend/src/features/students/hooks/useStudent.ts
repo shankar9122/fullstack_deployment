@@ -1,7 +1,7 @@
 import { getErrorMessage, isAbortError } from '@/lib/http/errors';
 import { studentService } from '@/services/student.service';
 import type { Student } from '@/types/student';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export function useStudent(id: string) {
   const [student, setStudent] = useState<Student | null>(null);
@@ -28,5 +28,10 @@ export function useStudent(id: string) {
     return () => controller.abort();
   }, [id]);
 
-  return { student, loading, error };
+  // Called after a photo is uploaded or removed, so the page shows it without refetching
+  const setPhotoUrl = useCallback((photoUrl: string | null) => {
+    setStudent((current) => (current ? { ...current, photoUrl } : current));
+  }, []);
+
+  return { student, loading, error, setPhotoUrl };
 }
