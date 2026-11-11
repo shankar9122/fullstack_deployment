@@ -239,3 +239,14 @@ Checklist:
 Known limitations: the token is kept in localStorage, so an XSS bug could expose it (an httpOnly cookie
 behind a same-origin proxy would be safer). Logging out in one tab does not update other open tabs
 until they make a request.
+
+## Photos
+
+- `components/ui/Avatar` shows the photo from `student.photoUrl`, or the initials when there is none
+  or the image fails to load. It is a plain `<img>`, because the 256 px WebP is already small.
+- `features/students/components/PhotoUploader` handles choosing, previewing, uploading and removing.
+  It saves on its own endpoint, separately from the student form.
+- `photoValidation.ts` repeats the server's limits (type, 2 MB) only to avoid pointless uploads.
+- `lib/http/client.ts` sends `FormData` as is and does not set `Content-Type`, because the browser must
+  add the multipart boundary itself.
+- `useObjectUrl` creates the preview URL and revokes it on cleanup to avoid memory leaks.

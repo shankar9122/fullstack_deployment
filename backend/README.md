@@ -388,3 +388,28 @@ Example: `subjects`.
 - Planned: a NestJS port of this API (modules, DTO validation with pipes, guards).
 - The delete guards are check-then-delete, so a race between two simultaneous requests could still leave a dangling reference. A transaction or soft delete would close that gap.
 - No automated tests yet.
+
+## Student photos
+
+- `PUT /api/students/:id/photo` (admin) uploads a photo as multipart form data, field name `photo`.
+  `DELETE /api/students/:id/photo` (admin) removes it.
+- The photo is not served by this API. Every student response carries `photoUrl`, a signed
+  Cloudinary URL (or `null`), so the browser loads the image straight from Cloudinary's CDN.
+- Uploads are limited to 2 MB and JPEG, PNG or WebP. The bytes are decoded with `sharp` (the declared
+  content type is not trusted), rotated, cropped to 256x256 and re-encoded as WebP. Re-encoding removes
+  EXIF data such as GPS location, so it never reaches Cloudinary.
+- Photos are stored with delivery type `authenticated`: the URL only works with a valid signature, which
+  cannot be forged without the API secret. The folder is `school-management/<dev|prod>/students`.
+- All Cloudinary calls live in `services/photoStorage.js`, so switching storage later changes one file.
+- Cloudinary failures return `502`. Removing a student also removes the photo (best effort).
+
+Environment: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
+The server refuses to start without them.
+
+Limitations:
+
+- Signed URLs do not expire on the free plan. Anyone who has a photo link can open it until the photo
+  is replaced or removed, or the API secret is rotated. Links are only returned to signed-in users.
+- The seed scripts do not delete Cloudinary files, so re-seeding students leaves orphaned photos.
+- Student photos are personal data of minors. A real deployment needs parental consent and a data
+  protection review.
