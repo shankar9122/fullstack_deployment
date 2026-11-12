@@ -1,24 +1,16 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import type { Env } from './config/env.validation';
+import { configureApp } from './setup-app';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  configureApp(app);
+
   const config = app.get<ConfigService<Env, true>>(ConfigService);
-
-  // Every route lives under /api, exactly like the Express version
-  app.setGlobalPrefix('api');
-
-  // Browsers may only call this API from the listed origins
-  app.enableCors({
-    origin: config
-      .get('CORS_ORIGIN', { infer: true })
-      .split(',')
-      .map((origin) => origin.trim()),
-    maxAge: 600, // cache the preflight result for 10 minutes
-  });
-
   await app.listen(config.get('PORT', { infer: true }));
 }
 
