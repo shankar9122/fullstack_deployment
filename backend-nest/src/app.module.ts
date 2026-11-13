@@ -6,6 +6,7 @@ import { HealthModule } from './health/health.module';
 
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { TeachersModule } from './teachers/teachers.module';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     }),
 
     HealthModule,
+    TeachersModule
   ],
   providers: [
     // Registers the guard for every route in the app
